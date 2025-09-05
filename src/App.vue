@@ -3,35 +3,49 @@ import { ref } from 'vue'
 import WelcomeComputed from './components/WelcomeComputed.vue'
 import HelloReverse from './components/HelloReverse.vue'
 import WatchYesNo from './components/WatchYesNo.vue'
+import TodoList from './components/todos/TodoList.vue'
 
-const tab = ref('semana1')        // fijo en semana1
-const view = ref('intro')         // intro | reverse | watcher
+const tab = ref('semana1')        // semana1 | semana2
+const week1View = ref('intro')    // intro | reverse | watcher
 </script>
 
 <template>
   <div class="container">
-    <h1>Curso Vue.js — Computed & Watchers (Semana 1)</h1>
-
+    <h1>Curso Vue.js — Computed & Watchers</h1>
     <div class="nav">
-      <button :class="{active: view==='intro'}"   @click="view='intro'">Introducción</button>
-      <button :class="{active: view==='reverse'}" @click="view='reverse'">Prop. Computadas</button>
-      <button :class="{active: view==='watcher'}" @click="view='watcher'">Watcher (sí/no)</button>
+      <button :class="{active: tab==='semana1'}" @click="tab='semana1'">Semana 1 — Fundamentos</button>
+      <button :class="{active: tab==='semana2'}" @click="tab='semana2'">Semana 2 — Proyecto final</button>
     </div>
 
-    <div class="card" v-if="view==='intro'">
-      <WelcomeComputed/>
-      <hr>
-      <p><small>Abrí la consola del navegador para comparar <b>computed</b> vs <b>método</b> (verás los <code>console.count</code>).</small></p>
-    </div>
+    <!-- SEMANA 1 -->
+    <section v-if="tab==='semana1'">
+      <div class="card">
+        <div class="nav">
+          <button :class="{active: week1View==='intro'}"   @click="week1View='intro'">Introducción</button>
+          <button :class="{active: week1View==='reverse'}" @click="week1View='reverse'">Prop. Computadas</button>
+          <button :class="{active: week1View==='watcher'}" @click="week1View='watcher'">Watcher (sí/no)</button>
+        </div>
 
-    <div class="card" v-else-if="view==='reverse'">
-      <HelloReverse/>
-      <p><small>Reproduce “Hola → aloH” usando una <b>propiedad computada</b> y la misma lógica como <b>método</b>.</small></p>
-    </div>
+        <div v-if="week1View==='intro'">
+          <WelcomeComputed/>
+        </div>
 
-    <div class="card" v-else>
-      <WatchYesNo/>
-      <p><small>Ejemplo de <b>watch</b> con <i>debounce</i> y llamada a API (yes/no).</small></p>
-    </div>
+        <div v-else-if="week1View==='reverse'">
+          <HelloReverse/>
+        </div>
+
+        <div v-else>
+          <WatchYesNo/>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEMANA 2 -->
+    <section v-else>
+      <div class="card">
+        <h2>Proyecto final — Lista de tareas</h2>
+        <TodoList/>
+      </div>
+    </section>
   </div>
 </template>
